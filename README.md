@@ -8,6 +8,10 @@ In the most part, it is an indirect port of
 [Jake Gordon](https://github.com/jakesgordon)'s much more mature
 [Sprite Factory for Ruby](https://github.com/jakesgordon/sprite-factory).
 
+## Installation
+
+	npm install node-sprite
+
 ## Usage
 
 	var Builder = require('node-sprite').Builder;
