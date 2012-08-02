@@ -14,6 +14,11 @@ if ! which wget >/dev/null; then
 	cd /usr/local/src
 fi
 
+if which convert >/dev/null; then
+	echo 'Great, ImageMagick is already installed.'
+	exit 0
+fi
+
 # prerequisite packages
 wget http://nongnu.askapache.com/freetype/freetype-2.3.9.tar.gz
 tar zxvf freetype-2.3.9.tar.gz

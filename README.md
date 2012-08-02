@@ -10,11 +10,8 @@ In the most part, it is an indirect port of
 
 ## Requirements
 
-Requires [ImageMagick](http://www.imagemagick.org). For Unix/Mac, there
-is a handy script in /scripts:
-
-	$ chmod +x ./scripts/imagemagick.sh
-	$ ./scripts/imagemagick.sh
+Requires [ImageMagick](http://www.imagemagick.org). For Unix/Mac, this will
+be installed automagickally (ouch).
 
 ## Installation
 
