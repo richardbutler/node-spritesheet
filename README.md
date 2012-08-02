@@ -29,16 +29,14 @@ is a handy script in /scripts:
 ## Examples
 
 	var Builder = require('node-sprite').Builder,
-		images = [],
-		builder,
-		layout;
+		images = [];
 	
-	builder = new Builder( [ 'image1.png', 'image2.png', image3.png' ], images, {
+	new Builder( [ 'image1.png', 'image2.png', image3.png' ], images, {
 		outputImage: 'sprite.png',
 		outputCss: 'sprite.css',
 		selector: '.sprite'
 	})
-	builder.build( function() {
+	.build( function() {
 		console.log( "Built from " + images.length + " images" );
 	});
 
@@ -62,3 +60,5 @@ bin/assets/sprite.css.
 			}
 		}
 	}
+	
+	loadNpmTasks( 'node-sprite' );
