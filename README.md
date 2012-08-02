@@ -8,6 +8,14 @@ In the most part, it is an indirect port of
 [Jake Gordon](https://github.com/jakesgordon)'s much more mature
 [Sprite Factory for Ruby](https://github.com/jakesgordon/sprite-factory).
 
+## Requirements
+
+Requires [ImageMagick](http://www.imagemagick.org). For Unix/Mac, there
+is a handy script in /scripts:
+
+	$ chmod +x ./scripts/imagemagick.sh
+	$ ./scripts/imagemagick.sh
+
 ## Installation
 
 	npm install node-sprite
