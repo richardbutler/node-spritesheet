@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   "use strict";
 
-  var Builder = require('node-sprite').Builder;
+  var Builder = require('node-spritesheet').Builder;
 
   grunt.registerMultiTask("spritesheet", "Compile images to sprite sheet", function() {
     var options = grunt.helper("options", this, {namespace: "spritesheet", templateSettings: {}});

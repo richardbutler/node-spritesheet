@@ -1,11 +1,11 @@
 {
-    "name": "node-sprite",
+    "name": "node-spritesheet",
     "description": "Sprite sheet generator for node.js",
     "version": "0.1.0",
     "author": {
         "name": "Richard Butler"
     },
-    "main": "./node-sprite",
+    "main": "./node-spritesheet",
     "scripts": {
         "install": "./scripts/imagemagick.sh"
     },

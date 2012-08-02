@@ -1,6 +1,6 @@
-# node-sprite
+# node-spritesheet
 
-Node-sprite is a utility to create sprite sheets in node.js. Its original
+Node-spritesheet is a utility to create sprite sheets in node.js. Its original
 intention was to be used as a [Grunt](https://github.com/cowboy/grunt) task,
 but I decided it was worth abstracting further.
 
@@ -15,17 +15,17 @@ be installed automagickally (ouch).
 
 ## Installation
 
-	npm install node-sprite
+	npm install node-spritesheet
 
 ## Usage
 
-	var Builder = require('node-sprite').Builder;
+	var Builder = require('node-spritesheet').Builder;
 	var b = new Builder( imagePaths, imageArr, options );
 	b.build( callback );
 
 ## Examples
 
-	var Builder = require('node-sprite').Builder,
+	var Builder = require('node-spritesheet').Builder,
 		images = [];
 	
 	new Builder( [ 'image1.png', 'image2.png', image3.png' ], images, {
@@ -58,4 +58,4 @@ bin/assets/sprite.css.
 		}
 	}
 	
-	loadNpmTasks( 'node-sprite' );
+	loadNpmTasks( 'node-spritesheet' );
