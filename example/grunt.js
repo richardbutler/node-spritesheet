@@ -5,12 +5,12 @@ module.exports = function(grunt) {
         spritesheet: {
             compile: {
                 options: {
-                    outputImage: 'flags.png',
-                    outputCss: 'flags.css',
+                    outputImage: 'sprite/img/flags.png',
+                    outputCss: 'sprite/css/flags.css',
                     selector: '.flag'
                 },
                 files: {
-                    'bin/sprite': 'src/img/*'
+                    'bin': 'src/img/*'
                 }
             }
         }

@@ -48,12 +48,14 @@ bin/assets/sprite.css.
 	spritesheet: {
 		compile: {
 			options: {
-				outputImage: 'sprite.png',
-				outputCss: 'sprite.css',
-				selector: '.texture'
+				// Compiles to bin/assets/images/spritesheets/flags.png
+				outputImage: 'images/spritesheets/flags.png',
+				// Compiles to bin/assets/stylesheets/flags.css
+				outputCss: 'stylesheets/flags.css',
+				selector: '.flag'
 			},
 			files: {
-				'bin/assets': 'src/icons/*'
+				'bin/assets': 'src/icons/flags/*'
 			}
 		}
 	}

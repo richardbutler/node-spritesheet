@@ -1,8 +1,9 @@
 fs            = require( 'fs' )
+path          = require( 'path' )
 qfs           = require( 'q-fs' )
 exec          = require( 'child_process' ).exec
 async         = require( 'async' )
-ImageMagick   = require( './ImageMagick' )
+ImageMagick   = require( './imagemagick' )
 Layout        = require( './layout' )
 Style         = require( './style' )
 
@@ -24,8 +25,17 @@ class SpriteSheetBuilder
 
   constructor: ( @files, @images, @options ) ->
     @outputDirectory = @options.outputDirectory
-    @outputImageFilePath = "#{ @outputDirectory }/#{ @options.outputImage }" if @options.outputImage
-    @outputStyleFilePath = "#{ @outputDirectory }/#{ @options.outputCss }" if @options.outputCss
+    
+    separator = path.sep || "/"
+    
+    if @options.outputImage
+      @outputImageFilePath        = [ @outputDirectory, @options.outputImage ].join( separator )
+      @outputImageDirectoryPath   = path.dirname( @outputImageFilePath )
+      
+    if @options.outputCss
+      @outputStyleFilePath        = [ @outputDirectory, @options.outputCss ].join( separator )
+      @outputStyleDirectoryPath   = path.dirname( @outputStyleFilePath )
+    
     @selector = @options.selector || ''
 
   build: ( callback ) =>
@@ -37,7 +47,8 @@ class SpriteSheetBuilder
       console.log @summary()
       
       async.series [
-        @ensureDirectory
+        @ensureDirectory( @outputImageDirectoryPath )
+        @ensureDirectory( @outputStyleDirectoryPath )
         @style
         @createSprite
       ], callback
@@ -57,7 +68,8 @@ class SpriteSheetBuilder
       callback null, image
       
   style: ( callback ) =>
-    css = Style.generate @selector, @options.outputImage, @images
+    relativeImagePath = path.relative( @outputStyleDirectoryPath, @outputImageFilePath )
+    css = Style.generate @selector, relativeImagePath, @images
     
     fs.writeFile @outputStyleFilePath, css, ( err ) =>
       if err
@@ -91,7 +103,8 @@ class SpriteSheetBuilder
   reportPath: ( path ) ->
     path
     
-  ensureDirectory: ( callback ) =>
-    qfs.makeTree( @outputDirectory ).then( callback )
+  ensureDirectory: ( directory ) =>
+    ( callback ) =>
+      qfs.makeTree( directory ).then( callback )
 
 module.exports = SpriteSheetBuilder
