@@ -19,23 +19,10 @@ module.exports = function(grunt) {
             client: {
                 src: [ 'lib' ]
             }
-        }/*,
-        spritesheet: {
-            compile: {
-                options: {
-                    outputImage: 'sprite.png',
-                    outputCss: 'sprite.css',
-                    selector: '.texture'
-                },
-                files: {
-                    'bin/assets/stylesheets/sprite': 'src/icons/*'
-                }
-            }
-        }*/
+        }
     });
     
     grunt.loadNpmTasks('grunt-contrib');
-    //grunt.loadTasks('tasks');
 
     grunt.registerTask('default', 'clean coffee');
 };

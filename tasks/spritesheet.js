@@ -1,16 +1,17 @@
 module.exports = function(grunt) {
   "use strict";
 
-  var Builder = require('node-spritesheet').Builder;
+  var Builder = require('../').Builder;
 
   grunt.registerMultiTask("spritesheet", "Compile images to sprite sheet", function() {
-    var options = grunt.helper("options", this, {namespace: "spritesheet", templateSettings: {}});
+    var helpers = require('grunt-contrib-lib').init(grunt);
+    var options = helpers.options(this);
     var done = this.async()
 
     grunt.verbose.writeflags(options, "Options");
 
     // TODO: ditch this when grunt v0.4 is released
-    this.files = this.files || grunt.helper("normalizeMultiTaskFiles", this.data, this.target);
+    this.files = this.files || helpers.normalizeMultiTaskFiles(this.data, this.target);
 
     var srcFiles;
     var images;

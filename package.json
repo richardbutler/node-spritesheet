@@ -1,19 +1,17 @@
 {
     "name": "node-spritesheet",
     "description": "Sprite sheet generator for node.js",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "author": {
         "name": "Richard Butler"
     },
-    "main": "./node-spritesheet",
+    "main": "./index",
     "scripts": {
         "install": "./scripts/imagemagick.sh"
     },
     "dependencies": {
         "async": "*",
-        "q-fs": "*"
-    },
-    "devDependencies": {
+        "q-fs": "*",
         "grunt-contrib": "*"
     }
 }
