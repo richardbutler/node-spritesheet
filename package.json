@@ -12,6 +12,7 @@
     "dependencies": {
         "async": "*",
         "q-fs": "*",
-        "grunt-contrib": "*"
+        "grunt-contrib": "*",
+        "grunt-contrib-lib": "*"
     }
 }
