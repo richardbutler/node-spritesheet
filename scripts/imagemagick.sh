@@ -19,6 +19,14 @@ if which convert >/dev/null; then
 	exit 0
 fi
 
+if which brew >/dev/null; then
+	echo 'Installing ImageMagick via HomeBrew...'
+	brew install imagemagick
+	exit 0
+fi
+
+echo 'Installing ImageMagick...'
+
 # prerequisite packages
 wget http://nongnu.askapache.com/freetype/freetype-2.3.9.tar.gz
 tar zxvf freetype-2.3.9.tar.gz
@@ -72,7 +80,7 @@ make
 sudo make install
 cd /usr/local/src
 
-wget ftp://mirror.cs.wisc.edu/pub/mirrors/ghost/GPL/gs870/ghostscript-8.70.tar.gz
+wget http://downloads.ghostscript.com/public/ghostscript-8.70.tar.gz
 tar zxvf ghostscript-8.70.tar.gz
 cd ghostscript-8.70
 ./configure  --prefix=/usr/local
@@ -80,7 +88,7 @@ make
 sudo make install
 cd /usr/local/src
 
-wget ftp://mirror.cs.wisc.edu/pub/mirrors/ghost/GPL/gs860/ghostscript-fonts-std-8.11.tar.gz
+wget http://ghostscript.googlecode.com/files/ghostscript-fonts-std-8.11.tar.gz
 tar zxvf ghostscript-fonts-std-8.11.tar.gz
 sudo mv fonts /usr/local/share/ghostscript
 
