@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   var Builder = require('../').Builder;
 
   grunt.registerMultiTask("spritesheet", "Compile images to sprite sheet", function() {
-    var helpers = require('grunt-contrib-lib').init(grunt);
+    var helpers = require('grunt-lib-contrib').init(grunt);
     var options = helpers.options(this);
     var done = this.async()
 

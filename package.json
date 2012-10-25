@@ -10,9 +10,9 @@
         "install": "./scripts/imagemagick.sh"
     },
     "dependencies": {
-        "async": "*",
-        "q-fs": "*",
-        "grunt-contrib": "*",
-        "grunt-contrib-lib": "*"
+        "async": "~0.1.22",
+        "q-fs": "~0.1.32",
+        "grunt-contrib": "~0.2.0",
+        "grunt-lib-contrib": "~0.3.0"
     }
 }
