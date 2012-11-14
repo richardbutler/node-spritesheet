@@ -26,7 +26,7 @@ class ImageMagick
 
   composite: ( filepath, images, width, height, callback ) ->
     console.log 'Writing images to sprite sheet...'
-    @exec "convert -size #{ width }x#{ height } canvas:white -alpha transparent #{ filepath }", ( error, stdout, stderr ) =>
+    @exec "convert -size #{ width }x#{ height } canvas:transparent -alpha transparent #{ filepath }", ( error, stdout, stderr ) =>
       if error or stderr
         throw "Error in creating canvas (#{ filepath }): #{ error || stderr }"
       
