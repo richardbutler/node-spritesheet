@@ -1,7 +1,7 @@
 {
     "name": "node-spritesheet",
     "description": "Sprite sheet generator for node.js",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "author": {
         "name": "Richard Butler"
     },
