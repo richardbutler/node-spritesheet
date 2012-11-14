@@ -105,6 +105,10 @@ class SpriteSheetBuilder
     
   ensureDirectory: ( directory ) =>
     ( callback ) =>
-      qfs.makeTree( directory ).then( callback )
+      qfs.isDirectory( directory ).then ( isDir ) =>
+        if isDir
+          callback( )
+        else
+          qfs.makeTree( directory ).then( callback )
 
 module.exports = SpriteSheetBuilder
