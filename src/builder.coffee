@@ -24,7 +24,7 @@ class SpriteSheetBuilder
         callback()
 
   constructor: ( @files, @images, @options ) ->
-    @outputDirectory = @options.outputDirectory
+    @outputDirectory = path.normalize @options.outputDirectory
     
     separator = path.sep || "/"
     
@@ -66,7 +66,7 @@ class SpriteSheetBuilder
     ImageMagick.identify filepath, ( image ) =>
       @images.push image
       callback null, image
-      
+  
   style: ( callback ) =>
     relativeImagePath = path.relative( @outputStyleDirectoryPath, @outputImageFilePath )
     css = Style.generate @selector, relativeImagePath, @images
