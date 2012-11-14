@@ -24,7 +24,7 @@ class SpriteSheetBuilder
         callback()
 
   constructor: ( @files, @images, @options ) ->
-    @outputDirectory = @options.outputDirectory
+    @outputDirectory = path.normalize @options.outputDirectory
     
     separator = path.sep || "/"
     
@@ -66,7 +66,7 @@ class SpriteSheetBuilder
     ImageMagick.identify filepath, ( image ) =>
       @images.push image
       callback null, image
-      
+  
   style: ( callback ) =>
     relativeImagePath = path.relative( @outputStyleDirectoryPath, @outputImageFilePath )
     css = Style.generate @selector, relativeImagePath, @images
@@ -105,6 +105,10 @@ class SpriteSheetBuilder
     
   ensureDirectory: ( directory ) =>
     ( callback ) =>
-      qfs.makeTree( directory ).then( callback )
+      qfs.isDirectory( directory ).then ( isDir ) =>
+        if isDir
+          callback( )
+        else
+          qfs.makeTree( directory ).then( callback )
 
 module.exports = SpriteSheetBuilder
