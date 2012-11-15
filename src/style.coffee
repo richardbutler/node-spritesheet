@@ -1,13 +1,16 @@
 class Style
 
   css: ( selector, attributes ) ->
-    "#{ selector } {\n#{ @cssStyle( attributes ) };\n}\n"
+    "#{ selector } {\n#{ attributes };\n}\n"
   
   cssStyle: ( attributes ) ->
     attributes.join ";\n"
   
   cssComment: ( comment ) ->
     "/*\n#{ comment }\n*/"
+  
+  cssSelector: ( selector, image ) ->
+    [ selector, image.name ].join( '.' )
   
   generate: ( selector, path, images ) ->
     styles = [
@@ -21,10 +24,10 @@ class Style
         "  height: #{ image.cssh }px"
         "  background-position: #{ -image.cssx }px #{ -image.cssy }px"
       ]
-      image.selector = selector
+      image.selector = @cssSelector selector, image
       image.style = @cssStyle attr
       
-      styles.push @css( [ selector, image.name ].join( '.' ), attr )
+      styles.push @css( image.selector, image.style )
     
     styles.push ""
     styles.join "\n"
