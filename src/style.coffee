@@ -10,8 +10,11 @@ class Style
     "/*\n#{ comment }\n*/"
   
   cssSelector: ( selector, image ) ->
-    [ selector, image.name ].join( '.' )
-  
+    all = image.name.replace( /__/g, ' ' ).replace( /--/g, ':' ).split( ' ' )
+    deepest = [ selector, all.pop() ].join( '.' )
+    all.push( deepest )
+    all.join( ' ' )
+   
   generate: ( selector, path, images ) ->
     styles = [
       @css selector, [
