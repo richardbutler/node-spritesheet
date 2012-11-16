@@ -26,10 +26,9 @@ module.exports = function(grunt) {
         srcFiles[ i ] = dir + srcFiles[ i ];
       }
       
-      images = [];
       options.outputDirectory = dir + file.dest;
       
-      builder = new Builder( srcFiles, images, options );
+      builder = new Builder( srcFiles, options );
       builder.build( callback );
     },
     done );

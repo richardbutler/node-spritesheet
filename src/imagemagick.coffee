@@ -24,15 +24,26 @@ class ImageMagick
         
       callback image
 
-  composite: ( filepath, images, width, height, callback ) ->
-    console.log 'Writing images to sprite sheet...'
-    @exec "convert -size #{ width }x#{ height } canvas:transparent -alpha transparent #{ filepath }", ( error, stdout, stderr ) =>
+  composite: ( options, callback ) ->
+    { filepath, images, width, height, interpolation } = options
+  
+    console.log '  Writing images to sprite sheet...'
+    
+    command = "
+      convert
+      -size #{ width }x#{ height }
+      canvas:transparent
+      -alpha transparent
+      #{ filepath }
+    "
+    
+    @exec command, ( error, stdout, stderr ) =>
       if error or stderr
         throw "Error in creating canvas (#{ filepath }): #{ error || stderr }"
       
       compose = ( image, next ) =>
-        console.log "  Composing #{ image.path }"
-        @composeImage filepath, image, next
+        console.log "    Composing #{ image.path }"
+        @composeImage filepath, image, interpolation, next
       
       async.forEachSeries images, compose, callback
 
@@ -40,8 +51,20 @@ class ImageMagick
     #console.log "Exec: #{ command }"
     exec command, callback
     
-  composeImage: ( filepath, image, callback ) ->
-    exec "composite -geometry +#{ image.cssx }+#{ image.cssy } #{ image.path } #{ filepath } #{ filepath }.tmp && mv #{ filepath }.tmp #{ filepath }", ( error, stdout, stderr ) ->
+  composeImage: ( filepath, image, downsampling, callback ) ->
+    downsampling ||= "Lanczos"
+    
+    command = "
+      composite
+      -geometry #{ image.width }x#{ image.height }+#{ image.cssx }+#{ image.cssy }
+      -filter #{ downsampling }
+      #{ image.path } #{ filepath } #{ filepath }.tmp
+      
+      &&
+      mv #{ filepath }.tmp #{ filepath }
+    "
+  
+    exec command, ( error, stdout, stderr ) ->
       if error or stderr
         throw "Error in composite (#{ filepath }): #{ error || stderr }"
       
