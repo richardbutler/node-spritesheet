@@ -25,18 +25,14 @@ module.exports = function(grunt) {
                 options: {
                     outputCss: 'sprite/css/text.css',
                     selector: ".text",
-                    downsampling: "Lanczos",
                     output: {
                         legacy: {
                             pixelRatio: 1,
-                            outputImage: 'sprite/img/text.png',
-                            resolveImagePath: function( path ) {
-                                return path.split( "@2x" ).join( "" );
-                            }
+                            outputImage: 'sprite/img/text.png'
                         },
                         retina: {
                             pixelRatio: 2,
-                            outputImage: 'sprite/img/text@2x.png',
+                            outputImage: 'sprite/img/text@2x.png'
                         }
                     },
                     resolveImageSelector: function( name, fullpath ) {

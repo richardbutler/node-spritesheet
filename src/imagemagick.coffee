@@ -52,12 +52,18 @@ class ImageMagick
     exec command, callback
     
   composeImage: ( filepath, image, downsampling, callback ) ->
-    downsampling ||= "Lanczos"
+    # No need - ImageMagick defaults to Mitchell or Lanczos, where appropriate.
+    # downsampling ||= "Lanczos"
     
     command = "
       composite
       -geometry #{ image.width }x#{ image.height }+#{ image.cssx }+#{ image.cssy }
-      -filter #{ downsampling }
+      "
+    
+    if downsampling
+      command += "-filter #{ downsampling }"
+      
+    command += "
       #{ image.path } #{ filepath } #{ filepath }.tmp
       
       &&
