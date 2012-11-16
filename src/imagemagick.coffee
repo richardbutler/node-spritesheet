@@ -25,7 +25,7 @@ class ImageMagick
       callback image
 
   composite: ( options, callback ) ->
-    { filepath, images, width, height, interpolation } = options
+    { filepath, images, width, height, downsampling } = options
   
     console.log '  Writing images to sprite sheet...'
     
@@ -43,7 +43,7 @@ class ImageMagick
       
       compose = ( image, next ) =>
         console.log "    Composing #{ image.path }"
-        @composeImage filepath, image, interpolation, next
+        @composeImage filepath, image, downsampling, next
       
       async.forEachSeries images, compose, callback
 

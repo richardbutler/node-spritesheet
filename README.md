@@ -56,6 +56,8 @@ This adds retina/legacy support.
     new Builder( [ 'image1@2x.png', 'image2@2x.png', image3@2x.png' ], {
         outputCss: 'sprite.css',
         selector: '.sprite',
+        // Optional ImageMagick sampling filter.
+        downsampling: "LanczosSharp",
         // Output configurations: in this instance to output two sprite sheets,
         // one for "legacy" (i.e. 72dpi, pixel ratio 1), and "retina" (x2).
         // These keys (legacy, retina) are completely arbitrary.

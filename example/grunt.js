@@ -25,6 +25,7 @@ module.exports = function(grunt) {
                 options: {
                     outputCss: 'sprite/css/flags-ex.css',
                     selector: ".flag",
+                    downsampling: "LanczosSharp",
                     output: {
                         legacy: {
                             pixelRatio: 1,
