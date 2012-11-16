@@ -7,7 +7,7 @@ module.exports = function(grunt) {
             //
             // Simple example.
             //
-            flags: {
+            flags_simple: {
                 options: {
                     outputImage: 'sprite/img/flags.png',
                     outputCss: 'sprite/css/flags.css',
@@ -21,26 +21,23 @@ module.exports = function(grunt) {
             //
             // Complex example with multiple pixel ratios.
             //
-            text: {
+            flags: {
                 options: {
-                    outputCss: 'sprite/css/text.css',
-                    selector: ".text",
+                    outputCss: 'sprite/css/flags-ex.css',
+                    selector: ".flag",
                     output: {
                         legacy: {
                             pixelRatio: 1,
-                            outputImage: 'sprite/img/text.png'
+                            outputImage: 'sprite/img/flags-ex.png'
                         },
                         retina: {
                             pixelRatio: 2,
-                            outputImage: 'sprite/img/text@2x.png'
+                            outputImage: 'sprite/img/flags-ex@2x.png'
                         }
-                    },
-                    resolveImageSelector: function( name, fullpath ) {
-                        return name.split( "@2x" ).join( "" );
                     }
                 },
                 files: {
-                    'bin': 'src/img/text/*'
+                    'bin': 'src/img/flags-2x/*'
                 }
             }
             
