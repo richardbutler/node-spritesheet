@@ -8,7 +8,7 @@ In the most part, it is an indirect port of
 [Jake Gordon](https://github.com/jakesgordon)'s much more mature
 [Sprite Factory for Ruby](https://github.com/jakesgordon/sprite-factory).
 
-# Pixel ratios (retina displays, etc)
+## Pixel ratios (retina displays, etc)
 
 It will also handle auto-resizing of images for specified pixel
 densities. No more fart-arsing about for retina displays, just supply the
