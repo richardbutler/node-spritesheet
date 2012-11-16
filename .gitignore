@@ -2,6 +2,7 @@
 .bin
 .tmp
 .DS_Store
+.idea
 node_modules
 *.log
 bin
