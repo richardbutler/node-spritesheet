@@ -18,6 +18,7 @@ ensureDirectory = ( directory ) ->
       else
         qfs.makeTree( directory ).then( callback )
 
+
 class SpriteSheetBuilder
 
   @supportsPngcrush: ( callback ) ->
@@ -34,48 +35,66 @@ class SpriteSheetBuilder
       else
         callback()
 
-  constructor: ( @files, options ) ->
-    @outputConfigurations = options.output
+  @fromGruntTask: ( options ) ->
+    builder = new SpriteSheetBuilder( options )
     
+    outputConfigurations = options.output
     delete options.output
     
-    if @outputConfigurations && Object.keys( @outputConfigurations ).length > 0
+    if outputConfigurations && Object.keys( outputConfigurations ).length > 0
     
-      for key of @outputConfigurations
-        config = @outputConfigurations[ key ]
-        @outputConfigurations[ key ] = _.extend( { name: key }, options, config )
-           
-    else
-      @outputConfigurations = { default: _.extend( { pixelRatio: 1 }, options ) }
-    
-    @outputDirectory = path.normalize options.outputDirectory
+      for key of outputConfigurations
+        config = outputConfigurations[ key ]
+        builder.addConfiguration( key, config )
+      
+    return builder
+
+  constructor: ( @options ) ->
+    @files = options.files
+    @outputConfigurations = {}
+    @outputDirectory = path.normalize( options.outputDirectory )
     
     if options.outputCss
       @outputStyleFilePath        = [ @outputDirectory, options.outputCss ].join( separator )
       @outputStyleDirectoryPath   = path.dirname( @outputStyleFilePath )
 
+  addConfiguration: ( name, options ) ->
+    config = _.extend @options, options,
+      name: name,
+      outputStyleFilePath: @outputStyleFilePath
+      outputStyleDirectoryPath: @outputStyleDirectoryPath
+
+    ssc = new SpriteSheetConfiguration( @files, config )
+    
+    @outputConfigurations[ name ] = ssc
+    
+    # Ascertain the "base" configuration, i.e. the highest pixel density
+    # images, to scale down to other ratios
+    if !baseConfig || config.pixelRatio > baseConfig.pixelRatio
+      baseConfig = config
+    
+    return ssc
+
   build: ( done ) ->
     throw "no output style file specified"  if !@outputStyleFilePath
   
+    if Object.keys( @outputConfigurations ).length is 0
+      # If no configurations are supplied, we need to supply a default.
+      @addConfiguration( "default", { pixelRatio: 1 } )
+    
     @configs = []
     baseConfig = null
-
+    
     for key of @outputConfigurations
       config = @outputConfigurations[ key ]
-
-      _.extend config,
-        outputStyleFilePath: @outputStyleFilePath
-        outputStyleDirectoryPath: @outputStyleDirectoryPath
-
-      ssc = new SpriteSheetConfiguration( @files, config )
       
       # Ascertain the "base" configuration, i.e. the highest pixel density
       # images, to scale down to other ratios
       if !baseConfig || config.pixelRatio > baseConfig.pixelRatio
         baseConfig = config
       
-      @configs.push( ssc )
-      
+      @configs.push( config )
+    
     SpriteSheetConfiguration.baseConfiguration = baseConfig
     
     async.series [

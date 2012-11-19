@@ -30,90 +30,81 @@ be installed automagickally (ouch).
 ## Usage
 
 	var Builder = require( 'node-spritesheet' ).Builder;
-	var b = new Builder( imagePaths, options );
+	var b = new Builder( options );
 	b.build( callback );
 
-## Simple example
+### Simple example
 
-	var Builder = require( 'node-spritesheet' ).Builder;
-	
-	var builder = new Builder( [ 'image1.png', 'image2.png', image3.png' ], {
-		outputImage: 'sprite.png',
-		outputCss: 'sprite.css',
-		selector: '.sprite'
-	})
-	
-	builder.build( function() {
-		console.log( "Built from " + builder.images.length + " images" );
-	});
-
-## Complex example
-
-This adds retina/legacy support, and resamples the images (assuming the
-highest density has been supplied).
+Takes in a series of images a generates a spritesheet.
 
     var Builder = require( 'node-spritesheet' ).Builder;
     
-    new Builder( [ 'image1@2x.png', 'image2@2x.png', image3@2x.png' ], {
+    var builder = new Builder({
+        outputImage: 'sprite.png',
         outputCss: 'sprite.css',
         selector: '.sprite',
-        // Optional ImageMagick sampling filter.
-        downsampling: "LanczosSharp",
-        // Output configurations: in this instance to output two sprite sheets,
-        // one for "legacy" (i.e. 72dpi, pixel ratio 1), and "retina" (x2).
-        // These keys (legacy, retina) are completely arbitrary.
-        output: {
-            legacy: {
-                pixelRatio: 1,
-                outputImage: 'sprite.png'
-            },
-            // As the retina scheme has the highest pixel ratio, it will be
-            // assumed that all images passed to the builder are for 'retina',
-            // and will be downscaled for 'legacy'.
-            retina: {
-                pixelRatio: 2,
-                outputImage: 'sprite@2x.png'
-            }
-        },
-        // Allows you to augment your selector names for each image, based on
-        // the bare image "name", or the full image path.
-        resolveImageSelector: function( name, fullpath ) {
-            // For example, your files may well already be named with @2x, but
-            // you won't want that included in your CSS selectors.
-            return name.split( "@2x" ).join( "" );
-        }
-    })
-    .build();
+        images: [ 'image1.png', 'image2.png', image3.png' ]
+    });
+    
+    builder.build( function() {
+        console.log( "Built from " + builder.images.length + " images" );
+    });
 
-## Second complex example
+### More complex example
 
-Again, this adds retina/legacy support, but uses a filter function to ascertain
-which images are retina and which aren't, meaning you don't have to rely on the
-resampling option, if you want finer control.
+Add configurations to the builder to output multiple spritesheets based on
+different pixel densities, using media queries.
 
     var Builder = require( 'node-spritesheet' ).Builder;
     
-    new Builder( [ 'image1.png', 'image2.png', 'image1@2x.png', 'image2@2x.png' ], {
+    var builder = new Builder({
         outputCss: 'sprite.css',
         selector: '.sprite',
-        output: {
-            legacy: {
-                pixelRatio: 1,
-                outputImage: 'sprite.png',
-                filter: function( fullpath ) {
-                    return fullpath.indexOf( "@2x" ) === -1;
-                }
-            },
-            retina: {
-                pixelRatio: 2,
-                outputImage: 'sprite@2x.png',
-                filter: function( fullpath ) {
-                    return fullpath.indexOf( "@2x" ) >= 0;
-                }
-            }
-        }
-    })
-    .build();
+        images: [ 'image1.png', 'image2.png', image3.png' ]
+    });
+    
+    builder.addConfiguration( "legacy", {
+        pixelRatio: 1,
+        outputImage: 'sprite.png'
+    });
+    
+    builder.addConfiguration( "retina", {
+        pixelRatio: 2,
+        outputImage: 'sprite@2x.png'
+    });
+    
+    builder.build( function() {
+        console.log( "Built from " + builder.images.length + " images" );
+    });
+
+### Another complex example
+
+Even though ImageMagick uses some pretty decent algorithms for resampling images,
+you may not want node-spritesheet to automatically resize your retina versions
+for you, you may want to instead keep two copies of each image.
+
+    var Builder = require( 'node-spritesheet' ).Builder;
+    
+    var builder = new Builder({
+        outputCss: 'sprite.css',
+        selector: '.sprite'
+    });
+    
+    builder.addConfiguration( "legacy", {
+        pixelRatio: 1,
+        outputImage: 'sprite.png',
+        images: [ 'image1.png', 'image2.png', image3.png' ]
+    });
+    
+    builder.addConfiguration( "retina", {
+        pixelRatio: 2,
+        outputImage: 'sprite@2x.png',
+        images: [ 'image1@2x.png', 'image2@2x.png', image3@2x.png' ]
+    });
+    
+    builder.build( function() {
+        console.log( "Built from " + builder.images.length + " images" );
+    });
 
 ## Grunt task
 
@@ -123,6 +114,9 @@ The following grunt.js structure takes all images in src/icons and creates
 a spritesheet at bin/assets/sprite.png, with an accompanying stylesheet at
 bin/assets/sprite.css.
 
+### Simple example
+
+    // Add to your grunt config.
 	spritesheet: {
 		compile: {
 			options: {
@@ -130,9 +124,8 @@ bin/assets/sprite.css.
 				outputImage: 'images/spritesheets/flags.png',
 				// Compiles to bin/assets/stylesheets/flags.css
 				outputCss: 'stylesheets/flags.css',
+				// Uses this compound selector in the css, e.g. '.flag.my-image {}'
 				selector: '.flag'
-				
-				// ... Additional options as per above complex example, if needed.
 			},
 			files: {
 				'bin/assets': 'src/icons/flags/*'
@@ -140,31 +133,91 @@ bin/assets/sprite.css.
 		}
 	}
 	
+	// Add to your imports.
 	loadNpmTasks( 'node-spritesheet' );
 
-## TODO
+### Complex example
 
-The API is currently very Grunt-centric, i.e. it is designed around Grunt's
-limitations. The ideal would be to work around these, but also facilitate a
-nicer builder API, such as:
+This adds retina/legacy support, and resamples the images (assuming the
+highest density has been supplied).
 
-    var Builder = require( 'node-spritesheet' ).Builder;
+    // Add to your grunt config.
+    spritesheet: {
+        compile: {
+            options: {
+                outputCss: 'sprite.css',
+                selector: '.sprite',
+                // Optional ImageMagick sampling filter.
+                downsampling: "LanczosSharp",
+                // Output configurations: in this instance to output two sprite sheets,
+                // one for "legacy" (i.e. 72dpi, pixel ratio 1), and "retina" (x2).
+                // These keys (legacy, retina) are completely arbitrary.
+                output: {
+                    legacy: {
+                        pixelRatio: 1,
+                        outputImage: 'sprite.png'
+                    },
+                    // As the retina scheme has the highest pixel ratio, it will be
+                    // assumed that all images passed to the builder are for 'retina',
+                    // and will be downscaled for 'legacy'.
+                    retina: {
+                        pixelRatio: 2,
+                        outputImage: 'sprite@2x.png'
+                    }
+                },
+                // Allows you to augment your selector names for each image, based on
+                // the bare image "name", or the full image path.
+                resolveImageSelector: function( name, fullpath ) {
+                    // For example, your files may well already be named with @2x, but
+                    // you won't want that included in your CSS selectors.
+                    return name.split( "@2x" ).join( "" );
+                }
+            },
+            files: {
+                'bin/assets': 'src/icons/flags/*'
+            }
+        }
+    }
     
-    var b = new Builder({
-        outputCss: 'sprite.css',
-        selector: '.sprite'
-    });
+    // Add to your imports.
+    loadNpmTasks( 'node-spritesheet' );
+
+### Second complex example
+
+Again, this adds retina/legacy support, but uses a filter function to ascertain
+which images are retina and which aren't, meaning you don't have to rely on the
+resampling option, if you want finer control.
+
+    // Add to your grunt config.
+    spritesheet: {
+        compile: {
+            options: {
+                outputCss: 'sprite.css',
+                selector: '.sprite',
+                output: {
+                    legacy: {
+                        pixelRatio: 1,
+                        outputImage: 'sprite.png',
+                        // Just process the non-retina files
+                        filter: function( fullpath ) {
+                            return fullpath.indexOf( "@2x" ) === -1;
+                        }
+                    },
+                    retina: {
+                        pixelRatio: 2,
+                        outputImage: 'sprite@2x.png',
+                        // Just process the retina files
+                        filter: function( fullpath ) {
+                            return fullpath.indexOf( "@2x" ) >= 0;
+                        }
+                    }
+                }
+            },
+            files: {
+                'bin/assets': 'src/icons/flags/*'
+            }
+        }
+    }
     
-    b.addConfiguration( "legacy", {
-        pixelRatio: 1,
-        outputImage: 'sprite.png',
-        images: [ 'image1.png', 'image2.png' ]
-    });
-    
-    b.addConfiguration( "retina", {
-        pixelRatio: 2,
-        outputImage: 'sprite@2x.png',
-        images: [ 'image1@2x.png', 'image2@2x.png' ]
-    });
-    
-    b.build();
+    // Add to your imports.
+    loadNpmTasks( 'node-spritesheet' );
