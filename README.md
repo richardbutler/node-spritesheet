@@ -16,6 +16,9 @@ largest (highest-density) image. By default, this uses ImageMagick's version of
 the Lanczos and Mitchell algorithms, depending on the most appropriate, but you
 can specify any of the 20-odd [available](http://www.imagemagick.org/script/command-line-options.php#filter).
 
+You're not locked in to auto-resampling though, you can supply multiple density
+versions of the same image, if you prefer.
+
 Additionally, it will add the relevant cross-browser media queries to the CSS.
 
 ## Requirements
