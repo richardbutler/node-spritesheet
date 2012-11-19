@@ -50,7 +50,7 @@ class SpriteSheetBuilder
     return builder
 
   constructor: ( @options ) ->
-    @files = options.files
+    @files = options.images
     @outputConfigurations = {}
     @outputDirectory = path.normalize( options.outputDirectory )
     
@@ -64,7 +64,7 @@ class SpriteSheetBuilder
       outputStyleFilePath: @outputStyleFilePath
       outputStyleDirectoryPath: @outputStyleDirectoryPath
 
-    ssc = new SpriteSheetConfiguration( @files, config )
+    ssc = new SpriteSheetConfiguration( options.images || @files, config )
     
     @outputConfigurations[ name ] = ssc
     

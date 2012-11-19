@@ -26,7 +26,7 @@ module.exports = function(grunt) {"use strict";
                 srcFiles[i] = dir + srcFiles[i];
             }
 
-            options.files = srcFiles;
+            options.images = srcFiles;
             options.outputDirectory = dir + file.dest;
 
             builder = Builder.fromGruntTask(options);
