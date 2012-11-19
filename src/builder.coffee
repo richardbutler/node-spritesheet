@@ -55,7 +55,7 @@ class SpriteSheetBuilder
       @outputStyleDirectoryPath   = path.dirname( @outputStyleFilePath )
 
   build: ( done ) ->
-    throw "no output style file specified"    if !@outputStyleFilePath
+    throw "no output style file specified"  if !@outputStyleFilePath
   
     @configs = []
     baseConfig = null
@@ -98,9 +98,15 @@ class SpriteSheetBuilder
 
 class SpriteSheetConfiguration
 
-  constructor: ( @files, options ) ->
+  constructor: ( files, options ) ->
+    throw "no selector specified" if !options.selector
+    
     @images = []
+    @filter = options.filter
     @outputDirectory = path.normalize options.outputDirectory
+    
+    # Use the .filter() function, if applicable
+    @files = if @filter then files.filter( @filter ) else files
     
     # The ImageMagick filter method to use for resizing images.
     @downsampling = options.downsampling
@@ -126,7 +132,7 @@ class SpriteSheetConfiguration
     
     # Whether the images in this configuration should be resized, based on the
     # highest-density pixel ratio.
-    @derived = SpriteSheetConfiguration.baseConfiguration isnt @
+    @derived = ( !@filter and SpriteSheetConfiguration.baseConfiguration.name isnt @name ) or @files.length is 0
     
     # The multiplier for any image resizing that needs to take place against
     # the base configuration.
@@ -192,7 +198,12 @@ class SpriteSheetConfiguration
     output = "\n  Creating a sprite from following images:\n"
     
     for i in @images
-      output += "    #{ @reportPath( i.path ) } (#{ i.width }x#{ i.height })\n"
+      output += "    #{ @reportPath( i.path ) } (#{ i.width }x#{ i.height }"
+      
+      if @derived
+        output += " - derived from #{ SpriteSheetConfiguration.baseConfiguration.name }"
+      
+      output += ")\n"
 
     output += "\n  Output files:
      #{ @reportPath @outputImageFilePath }"

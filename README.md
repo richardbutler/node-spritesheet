@@ -49,7 +49,8 @@ be installed automagickally (ouch).
 
 ## Complex example
 
-This adds retina/legacy support.
+This adds retina/legacy support, and resamples the images (assuming the
+highest density has been supplied).
 
     var Builder = require( 'node-spritesheet' ).Builder;
     
@@ -84,6 +85,36 @@ This adds retina/legacy support.
     })
     .build();
 
+## Second complex example
+
+Again, this adds retina/legacy support, but uses a filter function to ascertain
+which images are retina and which aren't, meaning you don't have to rely on the
+resampling option, if you want finer control.
+
+    var Builder = require( 'node-spritesheet' ).Builder;
+    
+    new Builder( [ 'image1.png', 'image2.png', 'image1@2x.png', 'image2@2x.png' ], {
+        outputCss: 'sprite.css',
+        selector: '.sprite',
+        output: {
+            legacy: {
+                pixelRatio: 1,
+                outputImage: 'sprite.png',
+                filter: function( fullpath ) {
+                    return fullpath.indexOf( "@2x" ) === -1;
+                }
+            },
+            retina: {
+                pixelRatio: 2,
+                outputImage: 'sprite@2x.png',
+                filter: function( fullpath ) {
+                    return fullpath.indexOf( "@2x" ) >= 0;
+                }
+            }
+        }
+    })
+    .build();
+
 ## Grunt task
 
 This is a multi-task, supporting multiple spritesheets in one gruntfile.
@@ -110,3 +141,30 @@ bin/assets/sprite.css.
 	}
 	
 	loadNpmTasks( 'node-spritesheet' );
+
+## TODO
+
+The API is currently very Grunt-centric, i.e. it is designed around Grunt's
+limitations. The ideal would be to work around these, but also facilitate a
+nicer builder API, such as:
+
+    var Builder = require( 'node-spritesheet' ).Builder;
+    
+    var b = new Builder({
+        outputCss: 'sprite.css',
+        selector: '.sprite'
+    });
+    
+    b.addConfiguration( "legacy", {
+        pixelRatio: 1,
+        outputImage: 'sprite.png',
+        images: [ 'image1.png', 'image2.png' ]
+    });
+    
+    b.addConfiguration( "retina", {
+        pixelRatio: 2,
+        outputImage: 'sprite@2x.png',
+        images: [ 'image1@2x.png', 'image2@2x.png' ]
+    });
+    
+    b.build();
