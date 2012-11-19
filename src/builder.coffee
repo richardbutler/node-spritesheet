@@ -62,6 +62,11 @@ class SpriteSheetBuilder
 
     for key of @outputConfigurations
       config = @outputConfigurations[ key ]
+
+      _.extend config,
+        outputStyleFilePath: @outputStyleFilePath
+        outputStyleDirectoryPath: @outputStyleDirectoryPath
+
       ssc = new SpriteSheetConfiguration( @files, config )
       
       # Ascertain the "base" configuration, i.e. the highest pixel density
@@ -120,7 +125,13 @@ class SpriteSheetConfiguration
     if options.outputImage
       @outputImageFilePath        = [ @outputDirectory, options.outputImage ].join( separator )
       @outputImageDirectoryPath   = path.dirname( @outputImageFilePath )
-    
+
+    if options.outputStyleFilePath
+      @outputStyleFilePath        = options.outputStyleFilePath
+
+    if options.outputStyleDirectoryPath
+      @outputStyleDirectoryPath   = options.outputStyleDirectoryPath
+
     @style = new Style( options )
 
   build: ( callback ) =>
