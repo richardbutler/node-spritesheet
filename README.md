@@ -43,6 +43,7 @@ Takes in a series of images a generates a spritesheet.
     var Builder = require( 'node-spritesheet' ).Builder;
     
     var builder = new Builder({
+        outputDirectory: '/path/to/directory',
         outputImage: 'sprite.png',
         outputCss: 'sprite.css',
         selector: '.sprite',
@@ -61,6 +62,7 @@ different pixel densities, using media queries.
     var Builder = require( 'node-spritesheet' ).Builder;
     
     var builder = new Builder({
+        outputDirectory: '/path/to/directory',
         outputCss: 'sprite.css',
         selector: '.sprite',
         images: [ 'image1.png', 'image2.png', image3.png' ]
@@ -89,6 +91,7 @@ for you, you may want to instead keep two copies of each image.
     var Builder = require( 'node-spritesheet' ).Builder;
     
     var builder = new Builder({
+        outputDirectory: '/path/to/directory',
         outputCss: 'sprite.css',
         selector: '.sprite'
     });
