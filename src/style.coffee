@@ -27,19 +27,20 @@ class Style
     '.' + name
   
   generate: ( options ) ->
-    { imagePath, relativeImagePath, images, pixelRatio } = options
+    { imagePath, relativeImagePath, images, pixelRatio, width, height } = options
     
     @pixelRatio = pixelRatio || 1
   
     styles = [
       @css @selector, [
         "  background: url( '#{ relativeImagePath }' ) no-repeat"
+        "  background-size: #{ width/pixelRatio }px #{ height/pixelRatio }px "
       ]
     ]
     for image in images
       attr = [
-        "  width: #{ image.cssw }px"
-        "  height: #{ image.cssh }px"
+        "  width: #{ image.cssw / pixelRatio }px"
+        "  height: #{ image.cssh / pixelRatio }px"
         "  background-position: #{ -image.cssx }px #{ -image.cssy }px"
       ]
       image.style = @cssStyle attr
