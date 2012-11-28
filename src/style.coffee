@@ -1,7 +1,15 @@
+path = require( "path" )
+
 class Style
 
+  constructor: ( options ) ->
+    @selector = options.selector
+    @pixelRatio = options.pixelRatio || 1
+    
+    @resolveImageSelector = options.resolveImageSelector if options.resolveImageSelector
+
   css: ( selector, attributes ) ->
-    "#{ selector } {\n#{ attributes };\n}\n"
+    "#{ selector } {\n#{ @cssStyle( attributes ) };\n}\n"
   
   cssStyle: ( attributes ) ->
     attributes.join ";\n"
@@ -14,11 +22,18 @@ class Style
     deepest = [ selector, all.pop() ].join( '.' )
     all.push( deepest )
     all.join( ' ' )
-   
-  generate: ( selector, path, images ) ->
+  
+  resolveImageSelector: ( name ) ->
+    name
+  
+  generate: ( options ) ->
+    { imagePath, relativeImagePath, images, pixelRatio } = options
+    
+    @pixelRatio = pixelRatio || 1
+  
     styles = [
-      @css selector, [
-        "  background: url( '#{ path }' ) no-repeat"
+      @css @selector, [
+        "  background: url( '#{ relativeImagePath }' ) no-repeat"
       ]
     ]
     for image in images
@@ -27,15 +42,29 @@ class Style
         "  height: #{ image.cssh }px"
         "  background-position: #{ -image.cssx }px #{ -image.cssy }px"
       ]
-      image.selector = @cssSelector selector, image
       image.style = @cssStyle attr
+      image.selector = @resolveImageSelector( image.name, image.path )
       
-      styles.push @css( image.selector, image.style )
+      styles.push @css( @cssSelector(@selector, image), attr )
     
     styles.push ""
-    styles.join "\n"
+    css = styles.join "\n"
+    
+    if pixelRatio > 1
+      css = @wrapMediaQuery( css )
+  
+    return css
   
   comment: ( comment ) ->
     @cssComment comment
+    
+  wrapMediaQuery: ( css ) ->
+    "@media\n
+(min--moz-device-pixel-ratio: #{ @pixelRatio }),\n
+(-o-min-device-pixel-ratio: #{ @pixelRatio }/1),\n
+(-webkit-min-device-pixel-ratio: #{ @pixelRatio }),\n
+(min-device-pixel-ratio: #{ @pixelRatio }) {\n
+#{ css }
+}\n"
   
-module.exports = new Style()
+module.exports = Style

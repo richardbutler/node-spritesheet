@@ -1,9 +1,10 @@
 {
     "name": "node-spritesheet",
     "description": "Sprite sheet generator for node.js",
-    "version": "0.2.3",
+    "version": "0.3.0",
     "author": {
-        "name": "Richard Butler"
+        "name": "Richard Butler",
+        "email": "rich@aspectvision.com"
     },
     "main": "./index",
     "scripts": {
@@ -13,6 +14,7 @@
         "async": "~0.1.22",
         "q-fs": "~0.1.32",
         "grunt-contrib": "~0.2.0",
-        "grunt-lib-contrib": "~0.3.0"
+        "grunt-lib-contrib": "~0.3.0",
+        "underscore": "~1.4.2"
     }
 }
