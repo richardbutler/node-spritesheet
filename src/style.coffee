@@ -17,14 +17,14 @@ class Style
   cssComment: ( comment ) ->
     "/*\n#{ comment }\n*/"
   
-  cssSelector: ( selector, image ) ->
-    all = image.name.replace( /__/g, ' ' ).replace( /--/g, ':' ).split( ' ' )
-    deepest = [ selector, all.pop() ].join( '.' )
+  joinSelectors: ( directSelector, imageSelector ) ->
+    all = imageSelector.split( ' ' )
+    deepest = [ directSelector, all.pop() ].join( '' )
     all.push( deepest )
     all.join( ' ' )
   
   resolveImageSelector: ( name ) ->
-    name
+    '.' + name
   
   generate: ( options ) ->
     { imagePath, relativeImagePath, images, pixelRatio } = options
@@ -44,8 +44,7 @@ class Style
       ]
       image.style = @cssStyle attr
       image.selector = @resolveImageSelector( image.name, image.path )
-      
-      styles.push @css( @cssSelector(@selector, image), attr )
+      styles.push @css( @joinSelectors(@selector, image.selector), attr )
     
     styles.push ""
     css = styles.join "\n"
