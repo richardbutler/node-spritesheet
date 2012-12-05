@@ -11,11 +11,12 @@ module.exports = function(grunt) {"use strict";
 
         // TODO: ditch this when grunt v0.4 is released
         this.files = this.files || helpers.normalizeMultiTaskFiles(this.data, this.target);
+        grunt.util = grunt.util || grunt.utils;
 
         var srcFiles;
         var images;
 
-        grunt.utils.async.forEachSeries(this.files, function(file, callback) {
+        grunt.util.async.forEachSeries(this.files, function(file, callback) {
             var builder;
             var dir = '';
             //grunt.task.expand( './..' );
