@@ -15,7 +15,7 @@ module.exports = function(grunt) {"use strict";
         var srcFiles;
         var images;
 
-        grunt.utils.async.forEachSeries(this.files, function(file, callback) {
+        grunt.util.async.forEachSeries(this.files, function(file, callback) {
             var builder;
             var dir = '';
             //grunt.task.expand( './..' );
