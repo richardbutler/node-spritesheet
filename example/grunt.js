@@ -77,7 +77,7 @@ module.exports = function(grunt) {
         }
     });
     
-    grunt.loadNpmTasks('node-spritesheet');
+    grunt.loadTasks('../tasks');
 
     grunt.registerTask('default', 'spritesheet');
 };

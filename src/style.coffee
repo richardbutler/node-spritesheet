@@ -18,10 +18,12 @@ class Style
     "/*\n#{ comment }\n*/"
   
   joinSelectors: ( directSelector, imageSelector ) ->
-    all = imageSelector.split( ' ' )
-    deepest = [ directSelector, all.pop() ].join( '' )
-    all.push( deepest )
-    all.join( ' ' )
+    ret = for selectors in imageSelector.split( ',' )
+      selectors = selectors.split( ' ' )
+      deepest = [ directSelector, selectors.pop() ].join( '' )
+      selectors.push( deepest )
+      selectors.join( ' ' )
+    ret.join( ',' )
   
   resolveImageSelector: ( name ) ->
     '.' + name
@@ -33,7 +35,7 @@ class Style
   
     styles = [
       @css @selector, [
-        "  background: url( '#{ relativeImagePath }' ) no-repeat"
+        "  background: url(#{ relativeImagePath }) no-repeat"
         "  background-size: #{ width/pixelRatio }px #{ height/pixelRatio }px "
       ]
     ]
@@ -41,7 +43,7 @@ class Style
       attr = [
         "  width: #{ image.cssw / pixelRatio }px"
         "  height: #{ image.cssh / pixelRatio }px"
-        "  background-position: #{ -image.cssx }px #{ -image.cssy }px"
+        "  background-position: #{ -image.cssx / pixelRatio }px #{ -image.cssy / pixelRatio }px"
       ]
       image.style = @cssStyle attr
       image.selector = @resolveImageSelector( image.name, image.path )
