@@ -7,9 +7,6 @@
         "email": "rich@aspectvision.com"
     },
     "main": "./index",
-    "scripts": {
-        "install": "./scripts/imagemagick.sh"
-    },
     "dependencies": {
         "async": "~0.1.22",
         "q-fs": "~0.1.32",
