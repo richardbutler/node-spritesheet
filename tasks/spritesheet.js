@@ -11,6 +11,7 @@ module.exports = function(grunt) {"use strict";
 
         // TODO: ditch this when grunt v0.4 is released
         this.files = this.files || helpers.normalizeMultiTaskFiles(this.data, this.target);
+        grunt.util = grunt.util || grunt.utils;
 
         var srcFiles;
         var images;
