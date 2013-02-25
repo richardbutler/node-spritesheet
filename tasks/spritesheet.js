@@ -20,7 +20,7 @@ module.exports = function(grunt) {"use strict";
             var dir = '';
             //grunt.task.expand( './..' );
 
-            srcFiles = grunt.file.expandFiles(file.src);
+            srcFiles = grunt.file.expand(file.src);
 
             for(var i = 0; i < srcFiles.length; i++) {
                 srcFiles[i] = dir + srcFiles[i];
