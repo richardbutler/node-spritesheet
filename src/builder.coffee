@@ -176,6 +176,7 @@ class SpriteSheetConfiguration
       
       @generateCSS()
       
+      console.log @outputImageDirectoryPath
       async.series [
         ensureDirectory( @outputImageDirectoryPath )
         @createSprite
@@ -213,6 +214,8 @@ class SpriteSheetConfiguration
       relativeImagePath: relativeImagePath
       images: @images
       pixelRatio: @pixelRatio
+      width: @layout.width
+      height: @layout.height
 
   createSprite: ( callback ) =>
     ImageMagick.composite(
