@@ -1,7 +1,7 @@
 {
     "name": "node-spritesheet",
     "description": "Sprite sheet generator for node.js",
-    "version": "0.3.0",
+    "version": "0.4.1",
     "author": {
         "name": "Richard Butler",
         "email": "rich@aspectvision.com"

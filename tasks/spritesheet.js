@@ -15,12 +15,12 @@ module.exports = function(grunt) {"use strict";
         var srcFiles;
         var images;
 
-        grunt.utils.async.forEachSeries(this.files, function(file, callback) {
+        grunt.util.async.forEachSeries(this.files, function(file, callback) {
             var builder;
             var dir = '';
             //grunt.task.expand( './..' );
 
-            srcFiles = grunt.file.expandFiles(file.src);
+            srcFiles = grunt.file.expand(file.src);
 
             for(var i = 0; i < srcFiles.length; i++) {
                 srcFiles[i] = dir + srcFiles[i];
