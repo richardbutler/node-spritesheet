@@ -1,4 +1,5 @@
 var spawn = require('child_process'), 
+    path = require('path'),
 	shell, 
 	platform = process.platform, 
 	exec = 'default';
@@ -8,7 +9,10 @@ var dispatch = {
 		handleExec(null, "\nPlease install ImageMagick (http://www.imagemagick.org)\n", null); 
 	},
 	default : function() {
-		shell = spawn.execFile('./imagemagick.sh', handleExec);
+		var script = process.argv,
+			p = path.dirname(script[1]),
+			e = p + '/imagemagick.sh';
+		shell = spawn.execFile(e, handleExec);
 	}
 }
 
@@ -20,7 +24,7 @@ dispatch[exec].call();
 
 function handleExec(error, stdOut, stdErr) {
 	var exit = 0;
-	
+
 	if (stdErr) {
 		console.error(stdErr);
 	}
