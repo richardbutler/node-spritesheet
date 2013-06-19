@@ -1,5 +1,16 @@
 #!/bin/sh
 
+if which convert >/dev/null; then
+	echo 'Great, ImageMagick is already installed.'
+	exit 0
+fi
+
+if which brew >/dev/null; then
+	echo 'Installing ImageMagick via HomeBrew...'
+	brew install imagemagick
+	exit 0
+fi
+
 [ ! -d /usr/local/src ] && sudo mkdir /usr/local/src
 
 if ! which wget >/dev/null; then
@@ -12,17 +23,6 @@ if ! which wget >/dev/null; then
 	make
 	sudo make install
 	cd /usr/local/src
-fi
-
-if which convert >/dev/null; then
-	echo 'Great, ImageMagick is already installed.'
-	exit 0
-fi
-
-if which brew >/dev/null; then
-	echo 'Installing ImageMagick via HomeBrew...'
-	brew install imagemagick
-	exit 0
 fi
 
 echo 'Installing ImageMagick...'
