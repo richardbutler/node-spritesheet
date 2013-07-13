@@ -140,16 +140,17 @@ class SpriteSheetConfiguration
     
     # The pseudonym for which this configuration should be referenced, e.g. "retina".
     @name = options.name || "default"
+
+    if options.outputStyleDirectoryPath
+      @outputStyleDirectoryPath   = options.outputStyleDirectoryPath
     
     if options.outputImage
       @outputImageFilePath        = [ @outputDirectory, options.outputImage ].join( separator )
       @outputImageDirectoryPath   = path.dirname( @outputImageFilePath )
+      @httpImagePath              = options.httpImagePath || path.relative( @outputStyleDirectoryPath, @outputImageFilePath )
 
     if options.outputStyleFilePath
       @outputStyleFilePath        = options.outputStyleFilePath
-
-    if options.outputStyleDirectoryPath
-      @outputStyleDirectoryPath   = options.outputStyleDirectoryPath
 
     @style = new Style( options )
 
@@ -208,9 +209,8 @@ class SpriteSheetConfiguration
       callback null, image
   
   generateCSS: =>
-    relativeImagePath = path.relative( @outputStyleDirectoryPath, @outputImageFilePath )
     @css = @style.generate
-      relativeImagePath: relativeImagePath
+      relativeImagePath: @httpImagePath
       images: @images
       pixelRatio: @pixelRatio
 
