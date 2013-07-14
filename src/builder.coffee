@@ -213,6 +213,8 @@ class SpriteSheetConfiguration
       relativeImagePath: relativeImagePath
       images: @images
       pixelRatio: @pixelRatio
+      width: @layout.width
+      height: @layout.height
 
   createSprite: ( callback ) =>
     ImageMagick.composite(
