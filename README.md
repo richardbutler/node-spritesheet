@@ -65,7 +65,7 @@ different pixel densities, using media queries.
         outputDirectory: '/path/to/directory',
         outputCss: 'sprite.css',
         selector: '.sprite',
-        images: [ 'image1.png', 'image2.png', image3.png' ]
+        images: [ 'image1.png', 'image2.png', 'image3.png' ]
     });
     
     builder.addConfiguration( "legacy", {
