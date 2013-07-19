@@ -51,7 +51,7 @@ Takes in a series of images a generates a spritesheet.
     });
     
     builder.build( function() {
-        console.log( "Built from " + builder.images.length + " images" );
+        console.log( "Built from " + builder.options.images.length + " images" );
     });
 
 ### More complex example
@@ -79,7 +79,7 @@ different pixel densities, using media queries.
     });
     
     builder.build( function() {
-        console.log( "Built from " + builder.images.length + " images" );
+        console.log( "Built from " + builder.options.images.length + " images" );
     });
 
 ### Another complex example
@@ -109,7 +109,7 @@ for you, you may want to instead keep two copies of each image.
     });
     
     builder.build( function() {
-        console.log( "Built from " + builder.images.length + " images" );
+        console.log( "Built from " + builder.options.images.length + " images" );
     });
 
 ## Grunt task
