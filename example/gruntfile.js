@@ -52,6 +52,7 @@ module.exports = function(grunt) {
                 options: {
                     outputCss: 'sprite/css/flags-ex2.css',
                     selector: ".flag",
+                    httpImagePath: "http://test.com/static/sprite.png",
                     output: {
                         legacy: {
                             pixelRatio: 1,

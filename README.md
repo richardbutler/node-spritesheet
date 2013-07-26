@@ -152,8 +152,13 @@ highest density has been supplied).
             options: {
                 outputCss: 'sprite.css',
                 selector: '.sprite',
+                
                 // Optional ImageMagick sampling filter.
                 downsampling: "LanczosSharp",
+                
+                // Optional absolute path to output image.
+                httpImagePath: "http://static.mysite.com/images/sprite.png",
+                
                 // Output configurations: in this instance to output two sprite sheets,
                 // one for "legacy" (i.e. 72dpi, pixel ratio 1), and "retina" (x2).
                 // These keys (legacy, retina) are completely arbitrary.
@@ -170,6 +175,7 @@ highest density has been supplied).
                         outputImage: 'sprite@2x.png'
                     }
                 },
+                
                 // Allows you to augment your selector names for each image, based on
                 // the bare image "name", or the full image path.
                 resolveImageSelector: function( name, fullpath ) {
