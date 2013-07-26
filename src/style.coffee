@@ -31,16 +31,19 @@ class Style
         "  background-size: #{ width / pixelRatio }px #{ height / pixelRatio }px"
       ]
     ]
-    for image in images
-      attr = [
-        "  width: #{ image.cssw / pixelRatio }px"
-        "  height: #{ image.cssh / pixelRatio }px"
-        "  background-position: #{ -image.cssx / pixelRatio }px #{ -image.cssy / pixelRatio }px"
-      ]
-      image.style = @cssStyle attr
-      image.selector = @resolveImageSelector( image.name, image.path )
-      
-      styles.push @css( [ @selector, image.selector ].join( '.' ), attr )
+
+    # Only add background-position, width and height for pixelRatio === 1.
+    if pixelRatio is 1
+      for image in images
+        attr = [
+          "  width: #{ image.cssw / pixelRatio }px"
+          "  height: #{ image.cssh / pixelRatio }px"
+          "  background-position: #{ -image.cssx / pixelRatio }px #{ -image.cssy / pixelRatio }px"
+        ]
+        image.style = @cssStyle attr
+        image.selector = @resolveImageSelector( image.name, image.path )
+
+        styles.push @css( [ @selector, image.selector ].join( '.' ), attr )
     
     styles.push ""
     css = styles.join "\n"
