@@ -23,8 +23,7 @@ Additionally, it will add the relevant cross-browser media queries to the CSS.
 
 ## Requirements
 
-Requires [ImageMagick](http://www.imagemagick.org). For Unix/Mac, this will
-be installed automagickally (ouch).
+Requires [ImageMagick](http://www.imagemagick.org), available via HomeBrew (`$ sudo brew install ImageMagick`) or MacPorts: (`$ sudo port install ImageMagick`).
 
 ## Installation
 
@@ -47,11 +46,11 @@ Takes in a series of images a generates a spritesheet.
         outputImage: 'sprite.png',
         outputCss: 'sprite.css',
         selector: '.sprite',
-        images: [ 'image1.png', 'image2.png', image3.png' ]
+        images: [ 'image1.png', 'image2.png', 'image3.png' ]
     });
     
     builder.build( function() {
-        console.log( "Built from " + builder.images.length + " images" );
+        console.log( "Built from " + builder.files.length + " images" );
     });
 
 ### More complex example
@@ -79,7 +78,7 @@ different pixel densities, using media queries.
     });
     
     builder.build( function() {
-        console.log( "Built from " + builder.images.length + " images" );
+        console.log( "Built from " + builder.files.length + " images" );
     });
 
 ### Another complex example
@@ -109,7 +108,7 @@ for you, you may want to instead keep two copies of each image.
     });
     
     builder.build( function() {
-        console.log( "Built from " + builder.images.length + " images" );
+        console.log( "Built from " + builder.files.length + " images" );
     });
 
 ## Grunt task
