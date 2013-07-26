@@ -53,8 +53,7 @@ class Style
     @cssComment comment
     
   wrapMediaQuery: ( css ) ->
-    "@media\n
-(min--moz-device-pixel-ratio: #{ @pixelRatio }),\n
+    "@media (min--moz-device-pixel-ratio: #{ @pixelRatio }),\n
 (-o-min-device-pixel-ratio: #{ @pixelRatio }/1),\n
 (-webkit-min-device-pixel-ratio: #{ @pixelRatio }),\n
 (min-device-pixel-ratio: #{ @pixelRatio }) {\n
