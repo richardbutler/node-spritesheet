@@ -22,7 +22,8 @@ module.exports = function(grunt) {
         }
     });
     
-    grunt.loadNpmTasks('grunt-contrib');
+    grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
-    grunt.registerTask('default', 'clean coffee');
+    grunt.registerTask('default', [ 'clean', 'coffee' ]);
 };

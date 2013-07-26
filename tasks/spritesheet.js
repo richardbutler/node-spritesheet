@@ -1,36 +1,39 @@
-module.exports = function(grunt) {"use strict";
+var fs = require( "fs" );
 
-    var Builder = require('../').Builder;
+module.exports = function( grunt ) {
+    "use strict";
 
-    grunt.registerMultiTask("spritesheet", "Compile images to sprite sheet", function() {
-        var helpers = require('grunt-lib-contrib').init(grunt);
-        var options = helpers.options(this);
-        var done = this.async()
+    var Builder = require( '../' ).Builder;
 
-        grunt.verbose.writeflags(options, "Options");
+    grunt.registerMultiTask( "spritesheet", "Compile images to sprite sheet", function() {
+        var options = this.options(),
+            done = this.async();
 
-        // TODO: ditch this when grunt v0.4 is released
-        this.files = this.files || helpers.normalizeMultiTaskFiles(this.data, this.target);
+        grunt.verbose.writeflags( options, "Options" );
 
         var srcFiles;
-        var images;
 
-        grunt.util.async.forEachSeries(this.files, function(file, callback) {
-            var builder;
-            var dir = '';
-            //grunt.task.expand( './..' );
+        grunt.util.async.forEachSeries( this.files, function( file, callback ) {
+            var builder,
+                dir = '',
+                files = [], f;
 
-            srcFiles = grunt.file.expand(file.src);
+            srcFiles = grunt.file.expand( file.src );
 
-            for(var i = 0; i < srcFiles.length; i++) {
-                srcFiles[i] = dir + srcFiles[i];
+            for( var i = 0; i < srcFiles.length; i++ ) {
+                f = dir + srcFiles[ i ];
+
+                if ( fs.statSync( f ).isFile() ) {
+                    files.push( f );
+                }
             }
 
-            options.images = srcFiles;
+            options.images = files;
             options.outputDirectory = dir + file.dest;
 
-            builder = Builder.fromGruntTask(options);
-            builder.build(callback);
-        }, done);
+            builder = Builder.fromGruntTask( options );
+            builder.build( callback );
+        },
+        done );
     });
 }; 
