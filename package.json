@@ -6,6 +6,10 @@
         "name": "Richard Butler",
         "email": "rich@aspectvision.com"
     },
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/richardbutler/node-spritesheet.git"
+    },
     "main": "./index",
     "scripts": {
         "install": "grunt"
