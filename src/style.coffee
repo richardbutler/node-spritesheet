@@ -22,7 +22,7 @@ class Style
   
   generate: ( options ) ->
     { imagePath, relativeImagePath, images, pixelRatio, width, height } = options
-    
+    relativeImagePath = relativeImagePath.replace /(\\+)/g, "/"
     @pixelRatio = pixelRatio || 1
   
     styles = [
