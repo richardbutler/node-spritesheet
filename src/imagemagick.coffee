@@ -6,7 +6,7 @@ class ImageMagick
   identify: ( filepath, callback ) ->
     @exec "identify #{ filepath }", ( error, stdout, stderr ) ->
       if error or stderr
-        throw "Error in identify (#{ filepath }): #{ error || stderr }"
+        throw "Error in identify (#{ filepath }): #{ error or stderr }"
       
       parts = stdout.split " "
       dims = parts[ 2 ].split "x"
@@ -39,7 +39,10 @@ class ImageMagick
     
     @exec command, ( error, stdout, stderr ) =>
       if error or stderr
-        throw "Error in creating canvas (#{ filepath }): #{ error || stderr }"
+        if not /convert: unable to access configure file.+@ warning/.test( error or stderr )
+          throw "Error in creating canvas (#{ filepath }): #{ error or stderr }"
+        else
+          console.log "  Warning in creating canvas (#{ filepath }): #{ error or stderr }"
       
       compose = ( image, next ) =>
         console.log "    Composing #{ image.path }"
@@ -73,7 +76,10 @@ class ImageMagick
   
     exec command, ( error, stdout, stderr ) ->
       if error or stderr
-        throw "Error in composite (#{ filepath }): #{ error || stderr }"
+        if not /composite: unable to access configure file.+@ warning/.test( error or stderr )
+          throw "Error in composite (#{ filepath }): #{ error || stderr }"
+        else
+          console.log "  Warning in composite (#{ filepath }): #{ error or stderr }"
       
       callback()
 
