@@ -7,6 +7,7 @@ _             = require( "underscore" )
 ImageMagick   = require( './imagemagick' )
 Layout        = require( './layout' )
 Style         = require( './style' )
+logger        = require( './logger' )
 
 separator = path.sep || "/"
 
@@ -29,7 +30,7 @@ class SpriteSheetBuilder
     SpriteSheetBuilder.supportsPngcrush ( supported ) ->
       if supported
         crushed = "#{ image }.crushed"
-        console.log "\n  pngcrushing, this may take a few moments...\n"
+        logger.log "\n  pngcrushing, this may take a few moments...\n"
         exec "pngcrush -reduce #{ image } #{ crushed } && mv #{ crushed } #{ image }", ( error, stdout, stderr ) =>
           callback()
       else
@@ -53,6 +54,7 @@ class SpriteSheetBuilder
     @files = options.images
     @outputConfigurations = {}
     @outputDirectory = path.normalize( options.outputDirectory )
+    logger.disable() unless options.log
 
     if options.outputCss
       @outputStyleFilePath        = [ @outputDirectory, options.outputCss ].join( separator )
@@ -116,7 +118,7 @@ class SpriteSheetBuilder
       if err
         throw err
       else
-        console.log "CSS file written to", @outputStyleFilePath, "\n"
+        logger.log "CSS file written to", @outputStyleFilePath, "\n"
         callback()
 
 
@@ -157,9 +159,9 @@ class SpriteSheetConfiguration
   build: ( callback ) =>
     throw "No output image file specified"    if !@outputImageFilePath
 
-    console.log "--------------------------------------------------------------"
-    console.log "Building '#{ @name }' at pixel ratio #{ @pixelRatio }"
-    console.log "--------------------------------------------------------------"
+    logger.log "--------------------------------------------------------------"
+    logger.log "Building '#{ @name }' at pixel ratio #{ @pixelRatio }"
+    logger.log "--------------------------------------------------------------"
 
     # Whether the images in this configuration should be resized, based on the
     # highest-density pixel ratio.
@@ -173,7 +175,7 @@ class SpriteSheetConfiguration
       if @images.length is 0
         throw "No image files specified"
 
-      console.log @summary()
+      logger.log @summary()
 
       @generateCSS()
 
@@ -201,7 +203,7 @@ class SpriteSheetConfiguration
            image.width = Math.ceil( image.width )
            image.height = Math.ceil( image.height )
 
-           console.log( "  WARN: Dimensions for #{ image.filename } don't use multiples of the pixel ratio, so they've been rounded." )
+           logger.log( "  WARN: Dimensions for #{ image.filename } don't use multiples of the pixel ratio, so they've been rounded." )
 
         image.baseRatio = @baseRatio
 
