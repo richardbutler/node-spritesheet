@@ -143,11 +143,16 @@ class SpriteSheetConfiguration
 
     if options.outputStyleDirectoryPath
       @outputStyleDirectoryPath   = options.outputStyleDirectoryPath
+
+    #if the http image path ends in a slash, append outputImage.
+    if options.httpImagePath?
+      httpImgPath                 = options.httpImagePath
+      @httpImagePath              = if httpImgPath.slice(-1) is "/" then httpImgPath + options.outputImage else httpImgPath
     
     if options.outputImage
       @outputImageFilePath        = [ @outputDirectory, options.outputImage ].join( separator )
       @outputImageDirectoryPath   = path.dirname( @outputImageFilePath )
-      @httpImagePath              = options.httpImagePath || path.relative( @outputStyleDirectoryPath, @outputImageFilePath )
+      @httpImagePath              = @httpImagePath || path.relative( @outputStyleDirectoryPath, @outputImageFilePath )
 
     if options.outputStyleFilePath
       @outputStyleFilePath        = options.outputStyleFilePath
