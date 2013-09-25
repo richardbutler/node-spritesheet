@@ -30,7 +30,8 @@ class SpriteSheetBuilder
       if supported
         crushed = "#{ image }.crushed"
         console.log "\n  pngcrushing, this may take a few moments...\n"
-        exec "pngcrush -reduce #{ image } #{ crushed } && mv #{ crushed } #{ image }", ( error, stdout, stderr ) =>
+        movecmd = if process.platform != "win32" then "mv" else "move"
+        exec "pngcrush -reduce #{ image } #{ crushed } && #{ movecmd } #{ crushed } #{ image }", ( error, stdout, stderr ) =>
           callback()
       else
         callback()
