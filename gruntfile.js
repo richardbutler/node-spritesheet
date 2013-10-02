@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         watch: {
-            coffee: ['./src/*.coffee'],
+            files: ['./src/*.coffee'],
             tasks: ['coffee']
         },
         coffee: {
