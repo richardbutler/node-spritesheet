@@ -11,7 +11,8 @@ module.exports = function(grunt) {
                     'lib/builder.js': 'src/builder.coffee',
                     'lib/imagemagick.js': 'src/imagemagick.coffee',
                     'lib/style.js': 'src/style.coffee',
-                    'lib/layout.js': 'src/layout.coffee'
+                    'lib/layout.js': 'src/layout.coffee',
+                    'lib/logger.js': 'src/logger.coffee'
                 }
             }
         },
