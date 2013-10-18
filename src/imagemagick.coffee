@@ -54,6 +54,7 @@ class ImageMagick
   composeImage: ( filepath, image, downsampling, callback ) ->
     # No need - ImageMagick defaults to Mitchell or Lanczos, where appropriate.
     # downsampling ||= "Lanczos"
+    moveCommand = if process.platform is "win32" then "move" else "mv"
     
     command = "
       composite
@@ -67,9 +68,9 @@ class ImageMagick
       #{ image.path } #{ filepath } #{ filepath }.tmp
       
       &&
-      mv #{ filepath }.tmp #{ filepath }
+      #{ moveCommand } #{ filepath }.tmp #{ filepath }
     "
-  
+    
     exec command, ( error, stdout, stderr ) ->
       if error or stderr
         throw "Error in composite (#{ filepath }): #{ error || stderr }"
