@@ -32,7 +32,7 @@ class Layout
         @placeImage( i, node, hpadding, vpadding, hmargin, vmargin )
         @splitNode( node, i.w, i.h )
       else
-        root = @grow( root, i.w, i.h )
+        root = @grow( root, i.w, i.h, options )
         lp i
   
     for i in images
@@ -75,13 +75,13 @@ class Layout
       w: node.w - w
       h: h
   
-  grow: ( root, w, h ) ->
+  grow: ( root, w, h, options ) ->
   
     canGrowDown  = ( w <= root.w )
     canGrowRight = ( h <= root.h )
   
-    shouldGrowRight = canGrowRight && ( root.h >= ( root.w + w ) )
-    shouldGrowDown  = canGrowDown  && ( root.w >= ( root.h + h ) )
+    shouldGrowRight = options.alwaysGrowRight || ( canGrowRight && ( root.h >= ( root.w + w ) ))
+    shouldGrowDown  = options.alwaysGrowDown || ( canGrowDown  && ( root.w >= ( root.h + h ) ))
   
     if shouldGrowRight
       @growRight root, w, h
