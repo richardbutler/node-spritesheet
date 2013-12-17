@@ -11,9 +11,6 @@
         "url": "http://github.com/richardbutler/node-spritesheet.git"
     },
     "main": "./index",
-    "scripts": {
-        "install": "grunt"
-    },
     "dependencies": {
         "async": "~0.1.22",
         "q-fs": "~0.1.32",
