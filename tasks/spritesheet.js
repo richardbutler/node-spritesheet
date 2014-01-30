@@ -3,8 +3,7 @@ module.exports = function(grunt) {"use strict";
     var Builder = require('../').Builder;
 
     grunt.registerMultiTask("spritesheet", "Compile images to sprite sheet", function() {
-        var helpers = require('grunt-lib-contrib').init(grunt);
-        var options = helpers.options(this);
+        var options = this.options(this);
         var done = this.async()
 
         grunt.verbose.writeflags(options, "Options");
@@ -15,12 +14,12 @@ module.exports = function(grunt) {"use strict";
         var srcFiles;
         var images;
 
-        grunt.utils.async.forEachSeries(this.files, function(file, callback) {
+        grunt.util.async.forEachSeries(this.files, function(file, callback) {
             var builder;
             var dir = '';
             //grunt.task.expand( './..' );
 
-            srcFiles = grunt.file.expandFiles(file.src);
+            srcFiles = grunt.file.expand(file.src);
 
             for(var i = 0; i < srcFiles.length; i++) {
                 srcFiles[i] = dir + srcFiles[i];
