@@ -61,11 +61,10 @@ class ImageMagick
       "
     
     if downsampling
-      command += "-filter #{ downsampling }"
+      command += " -filter #{ downsampling }"
       
     movecmd = if process.platform != "win32" then "mv" else "move"  
-    command += "
-      #{ image.path } #{ filepath } #{ filepath }.tmp
+    command += " #{ image.path } #{ filepath } #{ filepath }.tmp
       
       &&
       #{ movecmd } #{ filepath }.tmp #{ filepath }
