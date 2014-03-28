@@ -12,12 +12,14 @@
     },
     "main": "./index",
     "scripts": {
-        "install": "grunt"
+        "prepublish": "grunt"
     },
     "dependencies": {
         "async": "~0.1.22",
         "q-fs": "~0.1.32",
-        "underscore": "~1.4.2",
+        "underscore": "~1.4.2"
+    },
+    "devDependencies": {
         "grunt": "~0.4.1",
         "grunt-contrib-coffee": "~0.7.0",
         "grunt-contrib-clean": "~0.5.0"
