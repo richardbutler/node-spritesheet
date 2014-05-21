@@ -4,9 +4,9 @@ async         = require( 'async' )
 class ImageMagick
   
   identify: ( filepath, callback ) ->
-    @exec "identify #{ filepath }", ( error, stdout, stderr ) ->
-      if error or stderr
-        throw "Error in identify (#{ filepath }): #{ error || stderr }"
+    @exec "identify #{ filepath }", ( error, stdout ) ->
+      if error
+        throw "Error in identify (#{ filepath }): #{ error }"
       
       parts = stdout.split " "
       dims = parts[ 2 ].split "x"
@@ -37,9 +37,9 @@ class ImageMagick
       #{ filepath }
     "
     
-    @exec command, ( error, stdout, stderr ) =>
-      if error or stderr
-        throw "Error in creating canvas (#{ filepath }): #{ error || stderr }"
+    @exec command, ( error, stdout ) =>
+      if error
+        throw "Error in creating canvas (#{ filepath }): #{ error }"
       
       compose = ( image, next ) =>
         console.log "    Composing #{ image.path }"
@@ -71,9 +71,9 @@ class ImageMagick
       #{ movecmd } #{ filepath }.tmp #{ filepath }
     "
   
-    exec command, ( error, stdout, stderr ) ->
-      if error or stderr
-        throw "Error in composite (#{ filepath }): #{ error || stderr }"
+    exec command, ( error, stdout ) ->
+      if error
+        throw "Error in composite (#{ filepath }): #{ error }"
       
       callback()
 
