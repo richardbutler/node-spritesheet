@@ -54,6 +54,11 @@ class SpriteSheetBuilder
     @files = options.images
     @outputConfigurations = {}
     @outputDirectory = path.normalize( options.outputDirectory )
+
+    if options.hasOwnProperty 'failOnWarning'
+      ImageMagick.failOnWarning = options.failOnWarning
+    else
+      ImageMagick.failOnWarning = true
     
     if options.outputCss
       @outputStyleFilePath        = [ @outputDirectory, options.outputCss ].join( separator )
@@ -164,7 +169,7 @@ class SpriteSheetConfiguration
     
     # Whether the images in this configuration should be resized, based on the
     # highest-density pixel ratio.
-    @derived = ( !@filter and SpriteSheetConfiguration.baseConfiguration.name isnt @name ) or @files.length is 0
+    @derived = ( !@filter and SpriteSheetConfiguration.baseConfiguration.name isnt @name ) and @files.length is 0
     
     # The multiplier for any image resizing that needs to take place against
     # the base configuration.
