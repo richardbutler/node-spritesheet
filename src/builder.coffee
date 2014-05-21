@@ -54,6 +54,11 @@ class SpriteSheetBuilder
     @files = options.images
     @outputConfigurations = {}
     @outputDirectory = path.normalize( options.outputDirectory )
+
+    if options.hasOwnProperty 'failOnWarning'
+      ImageMagick.failOnWarning = options.failOnWarning
+    else
+      ImageMagick.failOnWarning = true
     
     if options.outputCss
       @outputStyleFilePath        = [ @outputDirectory, options.outputCss ].join( separator )

@@ -4,8 +4,8 @@ async         = require( 'async' )
 class ImageMagick
   
   identify: ( filepath, callback ) ->
-    @exec "identify #{ filepath }", ( error, stdout, stderr ) ->
-      if error or stderr
+    @exec "identify #{ filepath }", ( error, stdout, stderr ) =>
+      if error || (stderr && @failOnWarning)
         throw "Error in identify (#{ filepath }): #{ error || stderr }"
       
       parts = stdout.split " "
@@ -38,7 +38,7 @@ class ImageMagick
     "
     
     @exec command, ( error, stdout, stderr ) =>
-      if error or stderr
+      if error || (stderr && @failOnWarning)
         throw "Error in creating canvas (#{ filepath }): #{ error || stderr }"
       
       compose = ( image, next ) =>
@@ -72,7 +72,7 @@ class ImageMagick
     "
   
     exec command, ( error, stdout, stderr ) ->
-      if error or stderr
+      if error || (stderr && @failOnWarning)
         throw "Error in composite (#{ filepath }): #{ error || stderr }"
       
       callback()
