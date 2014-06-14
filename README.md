@@ -64,7 +64,7 @@ different pixel densities, using media queries.
         outputDirectory: '/path/to/directory',
         outputCss: 'sprite.css',
         selector: '.sprite',
-        images: [ 'image1.png', 'image2.png', image3.png' ]
+        images: [ 'image1.png', 'image2.png', 'image3.png' ]
     });
     
     builder.addConfiguration( "legacy", {
@@ -98,13 +98,13 @@ for you, you may want to instead keep two copies of each image.
     builder.addConfiguration( "legacy", {
         pixelRatio: 1,
         outputImage: 'sprite.png',
-        images: [ 'image1.png', 'image2.png', image3.png' ]
+        images: [ 'image1.png', 'image2.png', 'image3.png' ]
     });
     
     builder.addConfiguration( "retina", {
         pixelRatio: 2,
         outputImage: 'sprite@2x.png',
-        images: [ 'image1@2x.png', 'image2@2x.png', image3@2x.png' ]
+        images: [ 'image1@2x.png', 'image2@2x.png', 'image3@2x.png' ]
     });
     
     builder.build( function() {
