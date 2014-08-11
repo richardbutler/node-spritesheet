@@ -160,6 +160,10 @@ highest density has been supplied).
                 httpImagePath: "http://static.mysite.com/images/sprite.png",
                 
                 // Optional padding and margin on each icon in the output image.
+                // Express padding and margin as pixels in the output image:
+                // a margin of 5 means a 2x retina output image will have 10px
+                // spacing between icons.
+                //
                 // Padding adds whitespace around each icon. Padding sometimes
                 // prevents icons from appearing "cut off" when the user uses
                 // browser zoom.
