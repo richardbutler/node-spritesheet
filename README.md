@@ -159,6 +159,18 @@ highest density has been supplied).
                 // Optional absolute path to output image.
                 httpImagePath: "http://static.mysite.com/images/sprite.png",
                 
+                // Optional padding and margin on each icon in the output image.
+                // Padding adds whitespace around each icon. Padding sometimes
+                // prevents icons from appearing "cut off" when the user uses
+                // browser zoom.
+                hpadding: 5,
+                vpadding: 5,
+                // Margin adds whitespace between icons in the output image, not
+                // affecting the size of each icon. Margin helps icons not spill
+                // into each other when the user uses browser zoom.
+                hmargin: 10,
+                vmargin: 10,
+                
                 // Output configurations: in this instance to output two sprite sheets,
                 // one for "legacy" (i.e. 72dpi, pixel ratio 1), and "retina" (x2).
                 // These keys (legacy, retina) are completely arbitrary.
@@ -217,6 +229,12 @@ resampling option, if you want finer control.
                     retina: {
                         pixelRatio: 2,
                         outputImage: 'sprite@2x.png',
+                        // Set extra margin only in the retina spritesheet. You can
+                        // also set a custom padding here that just applies to the
+                        // retina icon set, but doing so results in the icons being
+                        // different sizes between non-retina and retina.
+                        hmargin: 20,
+                        vmargin: 20,
                         // Just process the retina files
                         filter: function( fullpath ) {
                             return fullpath.indexOf( "@2x" ) >= 0;

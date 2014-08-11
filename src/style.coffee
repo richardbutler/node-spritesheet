@@ -5,6 +5,7 @@ class Style
   constructor: ( options ) ->
     @selector = options.selector
     @pixelRatio = options.pixelRatio || 1
+    @alwaysIncludeSpacing = options.alwaysIncludeSpacing
     
     @resolveImageSelector = options.resolveImageSelector if options.resolveImageSelector
 
@@ -33,7 +34,7 @@ class Style
     ]
 
     # Only add background-position, width and height for pixelRatio === 1.
-    if pixelRatio is 1
+    if @alwaysIncludeSpacing or pixelRatio is 1
       for image in images
         positionX = ( -image.cssx / pixelRatio )
         if positionX != 0
