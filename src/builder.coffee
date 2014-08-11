@@ -43,9 +43,17 @@ class SpriteSheetBuilder
     delete options.output
     
     if outputConfigurations && Object.keys( outputConfigurations ).length > 0
+      configurationSpecificSpacing = _.any outputConfigurations, (config) ->
+        _.has(config, 'hpadding') ||
+        _.has(config, 'vpadding') ||
+        _.has(config, 'hmargin') ||
+        _.has(config, 'vmargin')
+      if configurationSpecificSpacing
+        console.log "Detected configuration-specific padding/margin. Including custom positioning declarations for every media query block.\n"
     
       for key of outputConfigurations
         config = outputConfigurations[ key ]
+        config.alwaysIncludeSpacing = configurationSpecificSpacing
         builder.addConfiguration( key, config )
       
     return builder
@@ -154,6 +162,8 @@ class SpriteSheetConfiguration
       @outputStyleFilePath        = options.outputStyleFilePath
 
     @style = new Style( options )
+
+    @options = _.extend {}, options,
 
   build: ( callback ) =>
     throw "No output image file specified"    if !@outputImageFilePath
