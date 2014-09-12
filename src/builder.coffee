@@ -125,7 +125,8 @@ class SpriteSheetConfiguration
 
   constructor: ( files, options ) ->
     throw "no selector specified" if !options.selector
-    
+   
+    @options = options 
     @images = []
     @filter = options.filter
     @outputDirectory = path.normalize options.outputDirectory
