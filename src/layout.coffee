@@ -4,10 +4,10 @@ class Layout
   
     return width: 0, height: 0 if !images || !images.length
   
-    hpadding = options.hpadding || 0
-    vpadding = options.vpadding || 0
-    hmargin  = options.hmargin  || 0
-    vmargin  = options.vmargin  || 0
+    hpadding = options.hpadding * options.pixelRatio || 0
+    vpadding = options.vpadding * options.pixelRatio || 0
+    hmargin  = options.hmargin * options.pixelRatio || 0
+    vmargin  = options.vmargin * options.pixelRatio || 0
   
     for i in images
       i.w = i.width  + ( 2 * hpadding ) + ( 2 * hmargin )
