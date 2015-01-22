@@ -23,7 +23,7 @@ Additionally, it will add the relevant cross-browser media queries to the CSS.
 
 ## Requirements
 
-Requires [ImageMagick](http://www.imagemagick.org), available via HomeBrew (`$ sudo brew install ImageMagick`) or MacPorts: (`$ sudo port install ImageMagick`).
+Requires [ImageMagick](http://www.imagemagick.org), available via HomeBrew (`$ sudo brew install ImageMagick`) or MacPorts: (`$ sudo port install ImageMagick`) and [grunt](http://gruntjs.com) (`npm install -g grunt-cli`).
 
 ## Installation
 
