@@ -1,5 +1,6 @@
 exec          = require( 'child_process' ).exec
 async         = require( 'async' )
+path          = require( 'path' )
 
 class ImageMagick
   
@@ -12,8 +13,8 @@ class ImageMagick
       dims = parts[ 2 ].split "x"
       w = parseInt dims[ 0 ]
       h = parseInt dims[ 1 ]
-      filename = filepath.split( '/' ).pop()
-      name = filename.split( '.' ).shift()
+      filename = path.basename(filepath)
+      name = path.basename(filepath, path.extname(filepath))
       
       image =
         width: w
